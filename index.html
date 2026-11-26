@@ -96,10 +96,10 @@ h1 .strike::after{content:"";position:absolute;left:-4%;right:-4%;top:52%;height
 .stage{position:relative;height:620px}
 .phone{position:absolute;width:250px;aspect-ratio:9/16;border-radius:34px;background:var(--ink);padding:9px;box-shadow:0 30px 60px -20px rgba(22,18,15,.45);transition:transform .6s var(--ease)}
 .phone .scr{width:100%;height:100%;border-radius:26px;overflow:hidden;position:relative;background:#222}
-.phone img{width:100%;height:100%;object-fit:cover;animation:kb 14s ease-in-out infinite alternate}
+.phone img,.phone video{width:100%;height:100%;object-fit:cover}
 @keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.12) translateY(-2%)}}
 .phone .ui{position:absolute;inset:auto 12px 14px 12px;color:#fff;font-size:.72rem;font-weight:600;display:flex;align-items:center;gap:8px;text-shadow:0 1px 4px rgba(0,0,0,.5)}
-.phone .ui img{width:26px;height:26px;border-radius:50%;border:1.5px solid #fff;animation:none}
+.phone .ui img{width:26px;height:26px;border-radius:50%;border:1.5px solid #fff}
 .phone .play{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transition:opacity .3s;background:rgba(0,0,0,.18)}
 .phone .play span{width:64px;height:64px;border-radius:50%;background:var(--yel);display:grid;place-items:center;color:var(--ink)}
 .phone:hover .play{opacity:1}
@@ -134,7 +134,7 @@ h2{font-size:clamp(2.3rem,5vw,4.4rem);line-height:.98;letter-spacing:-.04em;font
 /* about */
 .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:36px;align-items:stretch}
 .polaroid{align-self:center;background:var(--paper);padding:14px 14px 60px;border-radius:8px;box-shadow:0 24px 50px -24px rgba(22,18,15,.4);transform:rotate(-3deg);position:relative;max-width:420px;justify-self:center}
-.polaroid img{border-radius:4px;aspect-ratio:4/5;object-fit:cover;object-position:top;width:100%}
+.polaroid img{border-radius:4px;aspect-ratio:6/7;object-fit:cover;object-position:center 30%;width:100%}
 .polaroid .hand{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:1.7rem}
 .polaroid .tape{position:absolute;top:-14px;left:50%;width:120px;height:30px;background:rgba(255,216,74,.85);transform:translateX(-50%) rotate(3deg)}
 .about-copy{background:var(--paper);border-radius:var(--r);padding:48px;border:1.5px solid var(--line)}
@@ -156,6 +156,8 @@ h2{font-size:clamp(2.3rem,5vw,4.4rem);line-height:.98;letter-spacing:-.04em;font
 .ep:hover{transform:rotate(0) scale(1.04);z-index:2}
 .ep img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease),filter .4s}
 .ep:hover img{transform:scale(1.06);filter:brightness(.8)}
+.ep video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+.ep video.on{opacity:1}
 .ep .meta{position:absolute;left:0;right:0;bottom:0;padding:44px 14px 14px;background:linear-gradient(transparent,rgba(0,0,0,.78));color:#fff}
 .ep .no,.ep .t{display:block}
 .ep .no{font-size:.68rem;letter-spacing:.16em;font-weight:700;color:var(--yel)}
@@ -256,8 +258,16 @@ details p{color:var(--ink-2);margin-top:12px;max-width:640px}
 
 /* footer */
 footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 120px;overflow:hidden}
-.f-big{font-size:clamp(3.4rem,12vw,11rem);font-weight:800;letter-spacing:-.06em;line-height:.85;white-space:nowrap}
-.f-big .cap{color:var(--ink)}
+.f-top{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
+.f-brand{display:flex;align-items:center;gap:16px}
+.f-brand .mk{width:64px;height:64px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px var(--yel);flex:none}
+.f-brand .mk img{width:100%;height:100%;object-fit:cover}
+.f-brand b{font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.03em;display:block;line-height:1.1}
+.f-brand small{color:rgba(251,244,230,.65);font-weight:600}
+.f-cols{display:flex;gap:34px;align-items:center;flex-wrap:wrap}
+.f-cols small{display:block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(251,244,230,.55);font-weight:700}
+.f-cols div a{font-weight:700;font-size:1.05rem}
+.f-cols div a:hover{color:var(--yel)}
 .f-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:46px;padding-top:24px;border-top:1px solid rgba(251,244,230,.15);font-size:.9rem;color:rgba(251,244,230,.7)}
 .f-row a:hover{color:var(--yel)}
 .socials{display:flex;gap:10px}
@@ -271,9 +281,31 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
 .modal{position:fixed;inset:0;z-index:100;background:rgba(22,18,15,.82);display:none;place-items:center;padding:20px;backdrop-filter:blur(6px)}
 .modal.on{display:grid}
 .modal .box{width:min(420px,100%);max-height:92vh;background:var(--paper);border-radius:22px;overflow:hidden;position:relative}
-.modal iframe{width:100%;height:min(760px,86vh);border:0;background:#fff}
+.modal video{width:100%;max-height:86vh;aspect-ratio:9/16;background:#000;display:block}
+.modal .box{background:#000}
 .modal .x{position:absolute;top:-52px;right:0;width:44px;height:44px;border-radius:50%;border:0;background:var(--yel);font-size:1.4rem;font-weight:800}
 .modal .wrapx{position:relative;width:min(420px,100%)}
+
+.yts{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.yt{position:relative;aspect-ratio:9/16;border-radius:20px;overflow:hidden;border:2px solid var(--ink);background:var(--ink);padding:0;text-align:left}
+.yt img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.yt:hover img{transform:scale(1.05)}
+.yt .ytb{position:absolute;top:50%;left:50%;width:58px;height:40px;margin:-20px 0 0 -29px;border-radius:12px;background:#FF0033;color:#fff;display:grid;place-items:center}
+.yt .ytt{position:absolute;left:0;right:0;bottom:0;padding:40px 12px 12px;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#fff;font-weight:700;font-size:.86rem;line-height:1.2}
+.yt-on iframe{width:100%;height:100%;border:0}
+.gscore{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.gscore>b{font-size:3.4rem;font-weight:800;letter-spacing:-.05em;line-height:1}
+.gscore small{display:block;color:var(--muted);font-weight:600;font-size:.85rem}
+.revs{overflow:hidden;padding:10px 0 30px;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.revs-track{display:flex;gap:18px;width:max-content;animation:crawl 80s linear infinite;padding:6px 0}
+.revs:hover .revs-track{animation-play-state:paused}
+.rev{width:340px;flex:none;background:var(--paper);border:1.5px solid var(--line);border-radius:24px;padding:26px;display:flex;flex-direction:column;gap:14px}
+.rev:nth-child(3n+1){background:var(--yel);border-color:var(--ink)}
+.rev:nth-child(3n+2){transform:rotate(-1deg)}
+.rev blockquote{font-size:1.02rem;line-height:1.5;flex:1}
+.rev figcaption{display:flex;align-items:center;gap:12px}
+.rev .av{width:40px;height:40px;border-radius:50%;background:var(--ink);color:var(--yel);display:grid;place-items:center;font-weight:800;flex:none}
+.rev figcaption small{display:block;font-size:.78rem;color:var(--muted)}
 
 /* reveal */
 .rv{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
@@ -291,6 +323,7 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
   .stage{height:560px;max-width:620px;margin:10px auto 0;width:100%}
   .about{grid-template-columns:1fr}
   .eps{grid-template-columns:repeat(3,1fr)}
+  .yts{grid-template-columns:repeat(3,1fr)}
   .c-big,.c-and{grid-column:span 12}.c4{grid-column:span 6}
   .steps,.nums{grid-template-columns:1fr 1fr}
   .faq,.contact{grid-template-columns:1fr}
@@ -307,6 +340,9 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
   .scribble{left:4px;top:-18px;font-size:1.3rem}
   .about-copy{padding:30px 24px}.duo{grid-template-columns:1fr}
   .eps{grid-template-columns:1fr 1fr;gap:12px}
+  .yts{grid-template-columns:1fr 1fr}
+  .rev{width:280px}
+  .f-cols{gap:20px}
   .ep:nth-child(even){transform:rotate(1.2deg) translateY(12px)}
   .c4{grid-column:span 12}
   .card{padding:26px}
@@ -361,6 +397,7 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
       <a href="#hakkinda">Hakkında</a>
       <a href="#bolumler">Bölümler</a>
       <a href="#hizmetler">Hizmetler</a>
+      <a href="#yorumlar">Yorumlar</a>
       <a href="#oyun">Hangisi?</a>
       <a href="#sss">SSS</a>
       <a href="#iletisim">İletişim</a>
@@ -372,7 +409,7 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
 
 <div class="mm" id="mm">
   <button class="x" id="mmx" aria-label="Kapat">✕</button>
-  <a href="#hakkinda">Hakkında</a><a href="#bolumler">Bölümler</a><a href="#hizmetler">Hizmetler</a><a href="#oyun">Hangisi?</a><a href="#sss">SSS</a><a href="#iletisim">İletişim</a>
+  <a href="#hakkinda">Hakkında</a><a href="#bolumler">Bölümler</a><a href="#hizmetler">Hizmetler</a><a href="#yorumlar">Yorumlar</a><a href="#oyun">Hangisi?</a><a href="#sss">SSS</a><a href="#iletisim">İletişim</a>
 </div>
 
 <main id="top">
@@ -398,9 +435,9 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
 
     <div class="stage" aria-label="Instagram videolarından kareler">
       <span class="scribble hand">bugünkü bölüm ↓</span>
-      <button class="phone ph1" data-reel="DUJEBfpDOkR" aria-label="Tartılmayın videosunu izle"><div class="scr"><img src="assets/tartilmayin.jpg" alt="Tartılmayın! videosu"><div class="play"><span><svg class="i"><use href="#i-play"/></svg></span></div></div></button>
-      <button class="phone ph2" data-reel="DUOD6RGjCQz" aria-label="Hangisi daha iyi videosunu izle"><div class="scr"><img src="assets/hangisi-iyi.jpg" alt="Hangisi daha iyi? videosu"><div class="ui"><img src="assets/profil.jpg" alt="">dytecemilerlemek</div><div class="play"><span><svg class="i"><use href="#i-play"/></svg></span></div></div></button>
-      <button class="phone ph3" data-reel="DT8S4w0jG98" aria-label="Hamileler bunları bilmeli videosunu izle"><div class="scr"><img src="assets/hamileler.jpg" alt="Hamileler bunları mutlaka bilmeli videosu"><div class="play"><span><svg class="i"><use href="#i-play"/></svg></span></div></div></button>
+      <button class="phone ph1" data-vid="tartilmayin" aria-label="Tartılmayın videosunu izle"><div class="scr"><video src="assets/v/tartilmayin.mp4" poster="assets/tartilmayin.jpg" autoplay muted loop playsinline preload="auto" aria-label="Tartılmayın! videosu"></video><div class="play"><span><svg class="i"><use href="#i-play"/></svg></span></div></div></button>
+      <button class="phone ph2" data-vid="hangisi-iyi" aria-label="Hangisi daha iyi videosunu izle"><div class="scr"><video src="assets/v/hangisi-iyi.mp4" poster="assets/hangisi-iyi.jpg" autoplay muted loop playsinline preload="auto" aria-label="Hangisi daha iyi? videosu"></video><div class="ui"><img src="assets/profil.jpg" alt="">dytecemilerlemek</div><div class="play"><span><svg class="i"><use href="#i-play"/></svg></span></div></div></button>
+      <button class="phone ph3" data-vid="hamileler" aria-label="Hamileler bunları bilmeli videosunu izle"><div class="scr"><video src="assets/v/hamileler.mp4" poster="assets/hamileler.jpg" autoplay muted loop playsinline preload="auto" aria-label="Hamileler bunları mutlaka bilmeli videosu"></video><div class="play"><span><svg class="i"><use href="#i-play"/></svg></span></div></div></button>
       <div class="sticker st1"><span class="stars">★★★★★</span> 5.0<small>208 mutlu danışan yorumu</small></div>
       <div class="sticker st2">Şef + Diyetisyen<small style="color:var(--ink-2)">Gastronomi &amp; Diyetetik</small></div>
       <div class="sticker st3">🥗 Online diyet<small style="color:var(--ink)">Tüm Türkiye'ye</small></div>
@@ -420,22 +457,23 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
   <div class="wrap about">
     <div class="polaroid rv">
       <span class="tape"></span>
-      <img src="assets/ofis.jpg" alt="Uzman Diyetisyen Ecem İlerlemek klinikte">
-      <span class="hand">kliniğimden selamlar! 👋</span>
+      <img src="assets/ecem-portre.jpg" alt="Uzman Diyetisyen Ecem İlerlemek">
+      <span class="hand">hadi başlayalım! 🌸</span>
     </div>
     <div class="about-copy rv">
       <span class="kick">Kulis</span>
       <h2>Mutfağı bilen <span class="cap">diyetisyen.</span></h2>
-      <p>Önce gastronomi ve mutfak sanatları okudum, sonra diyetetik alanında yüksek lisans yaptım. Yani bir tabağa hem lezzet hem de besin değeri gözüyle bakıyorum. Danışanlarıma “bunu yeme” demek yerine “bunu böyle pişir” demeyi seviyorum.</p>
+      <p>Yeditepe Üniversitesi Beslenme ve Diyetetik bölümünü yüksek onur derecesiyle bitirdim; Çapa, Yeditepe Üniversitesi Hastanesi ve Maltepe Bölge Hastanesi gibi köklü kurumlarda çalıştım. Gastronomi ve mutfak sanatları eğitimim sayesinde bir tabağa hem lezzet hem de besin değeri gözüyle bakıyorum. Danışanlarıma “bunu yeme” demek yerine “bunu böyle pişir” demeyi seviyorum.</p>
       <p>Samsun'daki iki kliniğimizde ve online görüşmelerde; kişiye özel beslenme planı, detox programları, andulasyon terapisi ve bölgesel incelme uygulamalarıyla süreci bütüncül yönetiyoruz.</p>
       <div class="duo">
         <div><b>🍳 Şef gözü</b><small>Pratik, lezzetli, sürdürülebilir tarifler</small></div>
         <div><b>🔬 Bilim gözü</b><small>Ölçülebilir, kişiye özel beslenme planı</small></div>
       </div>
       <div class="timeline">
-        <div><span>Lisans</span>Yeditepe Üniversitesi · Gastronomi ve Mutfak Sanatları</div>
-        <div><span>Y. Lisans</span>Yeditepe Üniversitesi · Beslenme ve Diyetetik (2018–2020)</div>
-        <div><span>Bugün</span>Ecem İlerlemek Sağlıklı Beslenme ve Andulasyon Merkezi · Samsun</div>
+        <div><span>2018</span>Yeditepe Üniversitesi · Beslenme ve Diyetetik — yüksek onur derecesi</div>
+        <div><span>Hastane</span>Çapa, Yeditepe Üniversitesi Hastanesi ve Maltepe Bölge Hastanesi'nde klinik deneyim</div>
+        <div><span>Mutfak</span>Yeditepe Üniversitesi · Gastronomi ve Mutfak Sanatları eğitimi</div>
+        <div><span>Bugün</span>Sağlıklı Beslenme ve Andulasyon Merkezi · İlkadım &amp; Atakum, Samsun</div>
       </div>
     </div>
   </div>
@@ -449,20 +487,38 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
       <p>Instagram'da binlerce kişinin takip ettiği kısa bölümler: mitler, pratik taktikler ve klinikten kareler. Bir kareye dokun, izle.</p>
     </div>
     <div class="eps">
-      <button class="ep rv" data-reel="DUOD6RGjCQz"><img src="assets/hangisi-iyi.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 01</span><span class="t">Hangisi daha iyi? En iyi protein kaynağı</span></span></button>
-      <button class="ep rv" data-reel="DULh7HdjI_7"><img src="assets/basari-taktigi.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 02</span><span class="t">En basit başarı taktiği</span></span></button>
-      <button class="ep rv" data-reel="DUJEBfpDOkR"><img src="assets/tartilmayin.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 03</span><span class="t">Tartılmayın! Neden mi?</span></span></button>
-      <button class="ep rv" data-reel="DUBU_9ZjD6V"><img src="assets/bunlari-yemeyin.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 04</span><span class="t">Bunları yemeyin</span></span></button>
-      <button class="ep rv" data-reel="DUD9ylLjPwm"><img src="assets/bunu-yapma.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 05</span><span class="t">Bunu yapmayı bırak</span></span></button>
-      <button class="ep rv" data-reel="DT8S4w0jG98"><img src="assets/hamileler.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 06</span><span class="t">Hamileler bunları mutlaka bilmeli</span></span></button>
-      <button class="ep rv" data-reel="DT-3qDuDLSD"><img src="assets/detay.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 07</span><span class="t">Gözden kaçırmış olabileceğiniz detay</span></span></button>
-      <button class="ep rv" data-reel="DUGin7dDJlo"><img src="assets/lazer.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 08</span><span class="t">Klinikten: cihazla sonuç alır mıyım?</span></span></button>
-      <button class="ep rv" data-reel="DUWAWEtjCoC"><img src="assets/mutfak.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 09</span><span class="t">Mutfakta: “Kızım napıyosun?”</span></span></button>
-      <button class="ep rv" data-reel="DbqcRFrMB_w"><img src="assets/ofis.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 10</span><span class="t">Klinikte bir gün</span></span></button>
+      <button class="ep rv" data-vid="hangisi-iyi"><img src="assets/hangisi-iyi.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 01</span><span class="t">Hangisi daha iyi? En iyi protein kaynağı</span></span></button>
+      <button class="ep rv" data-vid="basari-taktigi"><img src="assets/basari-taktigi.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 02</span><span class="t">En basit başarı taktiği</span></span></button>
+      <button class="ep rv" data-vid="tartilmayin"><img src="assets/tartilmayin.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 03</span><span class="t">Tartılmayın! Neden mi?</span></span></button>
+      <button class="ep rv" data-vid="bunlari-yemeyin"><img src="assets/bunlari-yemeyin.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 04</span><span class="t">Bunları yemeyin</span></span></button>
+      <button class="ep rv" data-vid="bunu-yapma"><img src="assets/bunu-yapma.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 05</span><span class="t">Bunu yapmayı bırak</span></span></button>
+      <button class="ep rv" data-vid="hamileler"><img src="assets/hamileler.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 06</span><span class="t">Hamileler bunları mutlaka bilmeli</span></span></button>
+      <button class="ep rv" data-vid="detay"><img src="assets/detay.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 07</span><span class="t">Gözden kaçırmış olabileceğiniz detay</span></span></button>
+      <button class="ep rv" data-vid="lazer"><img src="assets/lazer.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 08</span><span class="t">Klinikten: cihazla sonuç alır mıyım?</span></span></button>
+      <button class="ep rv" data-vid="mutfak"><img src="assets/mutfak.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 09</span><span class="t">Mutfakta: “Kızım napıyosun?”</span></span></button>
+      <button class="ep rv" data-vid="ofis"><img src="assets/ofis.jpg" alt=""><span class="pl"><svg class="i"><use href="#i-play"/></svg></span><span class="meta"><span class="no">BÖLÜM 10</span><span class="t">Klinikte bir gün</span></span></button>
     </div>
     <div class="eps-foot">
       <a href="https://www.instagram.com/dytecemilerlemek/" target="_blank" rel="noopener" class="btn btn-ink"><svg class="i"><use href="#i-ig"/></svg> Instagram'da takip et</a>
       <a href="https://www.youtube.com/@diyetisyenecem" target="_blank" rel="noopener" class="btn btn-line"><svg class="i"><use href="#i-yt"/></svg> YouTube kanalı</a>
+    </div>
+  </div>
+</section>
+
+<!-- YOUTUBE SHORTS -->
+<section id="youtube" style="padding-top:90px">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="kick">YouTube</span><h2>Kısa ve <span class="cap tom tilt-r">öz</span> tarifler</h2></div>
+      <p>YouTube kanalındaki Shorts videoları: pratik tarifler, mitler ve gebelikte beslenme ipuçları.</p>
+    </div>
+    <div class="yts">
+      <button class="yt rv" data-yt="YPfVYlGVR_s" aria-label="Verdiğim ölçülerle sadece 700 kcal tarif"><img src="assets/yt/YPfVYlGVR_s.jpg" alt=""><span class="ytb"><svg class="i"><use href="#i-play"/></svg></span><span class="ytt">Verdiğim ölçülerle sadece 700 kcal tarif</span></button>
+      <button class="yt rv" data-yt="W9dQa-w-eBs" aria-label="Örnek protein: yumurta"><img src="assets/yt/W9dQa-w-eBs.jpg" alt=""><span class="ytb"><svg class="i"><use href="#i-play"/></svg></span><span class="ytt">Örnek protein: yumurta</span></button>
+      <button class="yt rv" data-yt="ilUUMuzQgVo" aria-label="Lütfen artık bunlara kanmayın"><img src="assets/yt/ilUUMuzQgVo.jpg" alt=""><span class="ytb"><svg class="i"><use href="#i-play"/></svg></span><span class="ytt">Lütfen artık bunlara kanmayın</span></button>
+      <button class="yt rv" data-yt="379ieKNq_Sg" aria-label="Bunların sağlıklı olmadığını kabul edelim"><img src="assets/yt/379ieKNq_Sg.jpg" alt=""><span class="ytb"><svg class="i"><use href="#i-play"/></svg></span><span class="ytt">Bunların sağlıklı olmadığını kabul edelim</span></button>
+      <button class="yt rv" data-yt="Uo8H51a3Td4" aria-label="Hamile olan tanıdıklarına gönder"><img src="assets/yt/Uo8H51a3Td4.jpg" alt=""><span class="ytb"><svg class="i"><use href="#i-play"/></svg></span><span class="ytt">Hamile olan tanıdıklarına gönder</span></button>
+      <button class="yt rv" data-yt="IMg3BLPJ4J4" aria-label="Doğru bir rehber, aydınlık bir yol"><img src="assets/yt/IMg3BLPJ4J4.jpg" alt=""><span class="ytb"><svg class="i"><use href="#i-play"/></svg></span><span class="ytt">Doğru bir rehber, aydınlık bir yol</span></button>
     </div>
   </div>
 </section>
@@ -552,6 +608,38 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
   </div>
 </section>
 
+<!-- REVIEWS -->
+<section id="yorumlar">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="kick">Seyirci yorumları</span><h2>Alkışlar <span class="cap tilt">sizden</span></h2></div>
+      <div class="gscore"><b>5.0</b><span><span class="stars">★★★★★</span><small>Google'da 208 yorum</small></span><a href="https://www.google.com/maps/search/?api=1&amp;query=Uzman+Diyetisyen+Ecem+%C4%B0lerlemek+Sa%C4%9Fl%C4%B1kl%C4%B1+Beslenme+ve+Andulasyon+Merkezi" target="_blank" rel="noopener" class="btn btn-line">Tümünü gör</a></div>
+    </div>
+  </div>
+  <div class="revs" aria-label="Google yorumları">
+    <div class="revs-track">
+        <figure class="rev"><div class="stars">★★★★★</div><blockquote>“Ecem hanım ile 83 kg'da başladığım diyet serüvenimde 1.5 ayda 12 kg vererek hafiflemenin ve sağlığıma kavuşmanın mutluluğunu yaşadım. Üstelik keyifli listeler ile hiç aç kalmadan.”</blockquote><figcaption><span class="av">N</span><span><b>Nazlı K.</b><small>Google yorumu · 5 ay önce</small></span></figcaption></figure>
+        <figure class="rev"><div class="stars">★★★★★</div><blockquote>“Ecem hanım bilgisiyle, deneyimiyle, güler yüzüyle hep yanımızda. Verdiği tarifler o kadar güzel ki tüm ev halkı bayılarak tüketiyoruz.”</blockquote><figcaption><span class="av">G</span><span><b>Gray L.</b><small>Google yorumu · 3 hafta önce</small></span></figcaption></figure>
+        <figure class="rev"><div class="stars">★★★★★</div><blockquote>“Ecem Hanım'la 3. haftayı bitirdim, yaklaşık 3-4 kg verdim, üzerime olmayan giysilerimi giymeye başladım. İnanılmaz mutluyum, iyi ki Ecem Hanım'ı tercih etmişim.”</blockquote><figcaption><span class="av">H</span><span><b>Hilal</b><small>Google yorumu · 3 hafta önce</small></span></figcaption></figure>
+        <figure class="rev"><div class="stars">★★★★★</div><blockquote>“Bu süreçte ilgisi, samimiyeti, her durumda ulaşılabilir olması… 2 ay gibi kısa bir sürede 14 kg vererek beni hedef kiloma ulaştırdı.”</blockquote><figcaption><span class="av">A</span><span><b>Ayşe A.</b><small>Google yorumu · 5 ay önce</small></span></figcaption></figure>
+        <figure class="rev"><div class="stars">★★★★★</div><blockquote>“Kendisi alanında uzman, güler yüzlü, dakik ve oldukça açıklayıcı bilgiler sunan bir diyetisyen.”</blockquote><figcaption><span class="av">N</span><span><b>Nigar Elanur Ş.</b><small>Google yorumu · 2 hafta önce</small></span></figcaption></figure>
+        <figure class="rev"><div class="stars">★★★★★</div><blockquote>“56'lar şubesinde destek alıyorum. Motivesi, iletişim dili, kişiliği, 7/24 dönüşü çok kıymetli.”</blockquote><figcaption><span class="av">Ö</span><span><b>Özge S.</b><small>Google yorumu · 1 yıl önce</small></span></figcaption></figure>
+        <figure class="rev"><div class="stars">★★★★★</div><blockquote>“Ecem Hanım'la çalışmaya başladığımdan beri beslenmeye bakış açım çok değişti. Kendisi çok ilgili, güler yüzlü ve her zaman destekleyici.”</blockquote><figcaption><span class="av">S</span><span><b>Sena Yaren E.</b><small>Google yorumu · 3 ay önce</small></span></figcaption></figure>
+        <figure class="rev"><div class="stars">★★★★★</div><blockquote>“İki aydır beraber diyet programı ile çalışıyoruz, gayet olumlu güzel gidiyor. Kliniği gayet temiz ve ilgililer.”</blockquote><figcaption><span class="av">G</span><span><b>Gülcan G.</b><small>Google yorumu · 3 ay önce</small></span></figcaption></figure>
+        <figure class="rev"><div class="stars">★★★★★</div><blockquote>“Ecem hanımla geçen yıl kasımda tanıştık. Sayesinde 1 yıl olmadan 33 kg verdim.”</blockquote><figcaption><span class="av">Ü</span><span><b>Ülkü O.</b><small>Google yorumu · 11 ay önce</small></span></figcaption></figure>
+        <figure class="rev" aria-hidden="true"><div class="stars">★★★★★</div><blockquote>“Ecem hanım ile 83 kg'da başladığım diyet serüvenimde 1.5 ayda 12 kg vererek hafiflemenin ve sağlığıma kavuşmanın mutluluğunu yaşadım. Üstelik keyifli listeler ile hiç aç kalmadan.”</blockquote><figcaption><span class="av">N</span><span><b>Nazlı K.</b><small>Google yorumu · 5 ay önce</small></span></figcaption></figure>
+        <figure class="rev" aria-hidden="true"><div class="stars">★★★★★</div><blockquote>“Ecem hanım bilgisiyle, deneyimiyle, güler yüzüyle hep yanımızda. Verdiği tarifler o kadar güzel ki tüm ev halkı bayılarak tüketiyoruz.”</blockquote><figcaption><span class="av">G</span><span><b>Gray L.</b><small>Google yorumu · 3 hafta önce</small></span></figcaption></figure>
+        <figure class="rev" aria-hidden="true"><div class="stars">★★★★★</div><blockquote>“Ecem Hanım'la 3. haftayı bitirdim, yaklaşık 3-4 kg verdim, üzerime olmayan giysilerimi giymeye başladım. İnanılmaz mutluyum, iyi ki Ecem Hanım'ı tercih etmişim.”</blockquote><figcaption><span class="av">H</span><span><b>Hilal</b><small>Google yorumu · 3 hafta önce</small></span></figcaption></figure>
+        <figure class="rev" aria-hidden="true"><div class="stars">★★★★★</div><blockquote>“Bu süreçte ilgisi, samimiyeti, her durumda ulaşılabilir olması… 2 ay gibi kısa bir sürede 14 kg vererek beni hedef kiloma ulaştırdı.”</blockquote><figcaption><span class="av">A</span><span><b>Ayşe A.</b><small>Google yorumu · 5 ay önce</small></span></figcaption></figure>
+        <figure class="rev" aria-hidden="true"><div class="stars">★★★★★</div><blockquote>“Kendisi alanında uzman, güler yüzlü, dakik ve oldukça açıklayıcı bilgiler sunan bir diyetisyen.”</blockquote><figcaption><span class="av">N</span><span><b>Nigar Elanur Ş.</b><small>Google yorumu · 2 hafta önce</small></span></figcaption></figure>
+        <figure class="rev" aria-hidden="true"><div class="stars">★★★★★</div><blockquote>“56'lar şubesinde destek alıyorum. Motivesi, iletişim dili, kişiliği, 7/24 dönüşü çok kıymetli.”</blockquote><figcaption><span class="av">Ö</span><span><b>Özge S.</b><small>Google yorumu · 1 yıl önce</small></span></figcaption></figure>
+        <figure class="rev" aria-hidden="true"><div class="stars">★★★★★</div><blockquote>“Ecem Hanım'la çalışmaya başladığımdan beri beslenmeye bakış açım çok değişti. Kendisi çok ilgili, güler yüzlü ve her zaman destekleyici.”</blockquote><figcaption><span class="av">S</span><span><b>Sena Yaren E.</b><small>Google yorumu · 3 ay önce</small></span></figcaption></figure>
+        <figure class="rev" aria-hidden="true"><div class="stars">★★★★★</div><blockquote>“İki aydır beraber diyet programı ile çalışıyoruz, gayet olumlu güzel gidiyor. Kliniği gayet temiz ve ilgililer.”</blockquote><figcaption><span class="av">G</span><span><b>Gülcan G.</b><small>Google yorumu · 3 ay önce</small></span></figcaption></figure>
+        <figure class="rev" aria-hidden="true"><div class="stars">★★★★★</div><blockquote>“Ecem hanımla geçen yıl kasımda tanıştık. Sayesinde 1 yıl olmadan 33 kg verdim.”</blockquote><figcaption><span class="av">Ü</span><span><b>Ülkü O.</b><small>Google yorumu · 11 ay önce</small></span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
 <!-- PROCESS -->
 <section>
   <div class="wrap">
@@ -601,8 +689,8 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
         <h2>Bir sonraki bölümün<br>başrolü <span class="cap ink tilt">sensin.</span></h2>
         <div class="rows">
           <a class="row" href="tel:+905383810241"><svg class="i"><use href="#i-phone"/></svg><span><small>Telefon</small><b>0538 381 02 41</b></span></a>
-          <div class="row"><svg class="i"><use href="#i-pin"/></svg><span><small>İlkadım Şube</small><b>Kılıçdede Mah. 56. Sk. No:46, Bakon Apt. Kat:3 D:6, İlkadım / Samsun</b></span></div>
-          <div class="row"><svg class="i"><use href="#i-clock"/></svg><span><small>Çalışma saatleri</small><b>Randevu ile · Akşam 20:30'a kadar</b></span></div>
+          <div class="row"><svg class="i"><use href="#i-pin"/></svg><span><small>İlkadım · 56'lar Şube</small><b>Bakon Apartmanı, Kılıçdede Mah. 56. Sk. No:46 Kat:3 Daire:6, 55060 İlkadım / Samsun</b></span></div>
+          <div class="row"><svg class="i"><use href="#i-clock"/></svg><span><small>Çalışma saatleri</small><b>Randevu ile · İlkadım 20:30'a, Atakum 22:00'ye kadar</b></span></div>
         </div>
         <div class="btns">
           <a href="https://wa.me/905383810241?text=Merhaba%20Ecem%20Han%C4%B1m%2C%20randevu%20almak%20istiyorum." target="_blank" rel="noopener" class="btn btn-ink">WhatsApp'tan Yaz</a>
@@ -612,8 +700,8 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
       <div>
         <div class="map rv"><iframe title="Harita" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Uzman%20Diyetisyen%20Ecem%20%C4%B0lerlemek%20Sa%C4%9Fl%C4%B1kl%C4%B1%20Beslenme%20ve%20Andulasyon%20Merkezi%20Samsun&z=16&output=embed"></iframe></div>
         <div class="branches">
-          <div><b>📍 İlkadım · 56'lar Şube</b><span>Kılıçdede Mah., Bakon Apt.</span></div>
-          <div><b>📍 Atakum Şube</b><span>Adres için WhatsApp'tan yazın</span></div>
+          <div><b>📍 İlkadım · 56'lar Şube</b><span>Kılıçdede Mah. 56. Sk. No:46, Bakon Apt. · <a href="tel:+905383810241">0538 381 02 41</a></span></div>
+          <div><b>📍 Atakum Şube</b><span>Atatürk Bulvarı 3. Kısım No:146/A · <a href="tel:+905321690241">0532 169 02 41</a></span></div>
         </div>
       </div>
     </div>
@@ -623,7 +711,14 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
 
 <footer>
   <div class="wrap">
-    <div class="f-big">Afiyet <span class="cap">olsun!</span></div>
+    <div class="f-top">
+      <div class="f-brand"><span class="mk"><img src="assets/profil.jpg" alt=""></span><div><b>Ecem İlerlemek</b><small>Uzman Diyetisyen · Samsun &amp; Online</small></div></div>
+      <div class="f-cols">
+        <div><small>İlkadım · 56'lar</small><a href="tel:+905383810241">0538 381 02 41</a></div>
+        <div><small>Atakum</small><a href="tel:+905321690241">0532 169 02 41</a></div>
+        <a href="https://wa.me/905383810241?text=Merhaba%20Ecem%20Han%C4%B1m%2C%20randevu%20almak%20istiyorum." target="_blank" rel="noopener" class="btn btn-yel">Randevu Al</a>
+      </div>
+    </div>
     <div class="f-row">
       <span>© 2026 Uzman Diyetisyen Ecem İlerlemek · Sağlıklı Beslenme ve Andulasyon Merkezi · Samsun</span>
       <div class="socials">
@@ -643,7 +738,7 @@ footer{margin-top:110px;background:var(--ink);color:var(--cream);padding:70px 0 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Video">
   <div class="wrapx">
     <button class="x" id="mx" aria-label="Kapat">✕</button>
-    <div class="box"><iframe id="mframe" title="Instagram videosu" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    <div class="box"><video id="mvid" controls playsinline preload="none"></video></div>
   </div>
 </div>
 
@@ -660,12 +755,29 @@ mm.querySelectorAll('a').forEach(a=>a.onclick=()=>mm.classList.remove('on'));
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%5)*70+'ms';io.observe(el)});
 
-// reel modal (official Instagram embed)
-const modal=document.getElementById('modal'),mframe=document.getElementById('mframe');
-document.querySelectorAll('[data-reel]').forEach(b=>b.addEventListener('click',()=>{
-  mframe.src='https://www.instagram.com/reel/'+b.dataset.reel+'/embed/';modal.classList.add('on');document.body.style.overflow='hidden';
+// video modal (sesli izleme)
+const modal=document.getElementById('modal'),mvid=document.getElementById('mvid');
+document.querySelectorAll('[data-vid]').forEach(b=>b.addEventListener('click',()=>{
+  const n=b.dataset.vid;mvid.poster='assets/'+n+'.jpg';mvid.src='assets/v/'+n+'.mp4';mvid.muted=false;
+  modal.classList.add('on');document.body.style.overflow='hidden';mvid.play().catch(()=>{});
 }));
-const closeM=()=>{modal.classList.remove('on');mframe.src='about:blank';document.body.style.overflow=''};
+const closeM=()=>{modal.classList.remove('on');mvid.pause();mvid.removeAttribute('src');mvid.load();document.body.style.overflow=''};
+// bölüm kartları: üzerine gelince sessiz önizleme
+if(matchMedia('(hover:hover)').matches)document.querySelectorAll('.ep').forEach(b=>{
+  let v;
+  b.addEventListener('mouseenter',()=>{
+    if(!v){v=document.createElement('video');v.src='assets/v/'+b.dataset.vid+'.mp4';v.muted=true;v.loop=true;v.playsInline=true;b.insertBefore(v,b.querySelector('.pl'))}
+    v.play().then(()=>v.classList.add('on')).catch(()=>{});
+  });
+  b.addEventListener('mouseleave',()=>{if(v){v.pause();v.classList.remove('on')}});
+});
+// YouTube Shorts: tıklayınca yükle
+document.querySelectorAll('.yt').forEach(b=>b.addEventListener('click',()=>{
+  const box=document.createElement('div');box.className='yt yt-on';
+  const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+b.dataset.yt+'?autoplay=1&rel=0&playsinline=1';
+  f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;f.title=b.getAttribute('aria-label');
+  box.appendChild(f);b.replaceWith(box);
+},{once:true}));
 document.getElementById('mx').onclick=closeM;
 modal.addEventListener('click',e=>{if(e.target===modal)closeM()});
 addEventListener('keydown',e=>{if(e.key==='Escape'){closeM();mm.classList.remove('on')}});
